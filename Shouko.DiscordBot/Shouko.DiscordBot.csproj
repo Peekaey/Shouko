@@ -11,12 +11,33 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.4" />
+        <PackageReference Include="NetCord" Version="1.0.0-alpha.365" />
+        <PackageReference Include="NetCord.Hosting" Version="1.0.0-alpha.365" />
+        <PackageReference Include="NetCord.Hosting.AspNetCore" Version="1.0.0-alpha.365" />
+        <PackageReference Include="NetCord.Hosting.Services" Version="1.0.0-alpha.365" />
+        <PackageReference Include="NetCord.Services" Version="1.0.0-alpha.365" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Shouko.Api\Shouko.Api.csproj" />
+      <ProjectReference Include="..\Shouko.BackgroundService\Shouko.BackgroundService.csproj" />
+      <ProjectReference Include="..\Shouko.BusinessService\Shouko.BusinessService.csproj" />
+      <ProjectReference Include="..\Shouko.DataService\Shouko.DataService.csproj" />
+      <ProjectReference Include="..\Shouko.Helpers\Shouko.Helpers.csproj" />
+      <ProjectReference Include="..\Shouko.Models\Shouko.Models.csproj" />
     </ItemGroup>
 </Project>

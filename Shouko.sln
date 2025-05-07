@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shouko.DiscordBot", "Shouko.DiscordBot\Shouko.DiscordBot.csproj", "{633F1AB5-04D4-47A5-84A3-92DA1442CB80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shouko.DataService", "Shouko.DataService\Shouko.DataService.csproj", "{C8AD07C6-4F1A-41BC-B56F-C6EB87D9A3F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shouko.Models", "Shouko.Models\Shouko.Models.csproj", "{A8826B07-5D5A-4132-A6FF-91012BD76D1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shouko.Api", "Shouko.Api\Shouko.Api.csproj", "{517BA303-FC96-4D5E-9A0E-165D53B64072}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shouko.Helpers", "Shouko.Helpers\Shouko.Helpers.csproj", "{2709A595-499D-4EDE-BCE0-E02AA51962E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shouko.BusinessService", "Shouko.BusinessService\Shouko.BusinessService.csproj", "{B257B156-7013-4CAE-9E69-7C8AF9048C07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shouko.BackgroundService", "Shouko.BackgroundService\Shouko.BackgroundService.csproj", "{7ED169CC-F805-4CAD-98CD-7C4A6A0DB370}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{633F1AB5-04D4-47A5-84A3-92DA1442CB80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{633F1AB5-04D4-47A5-84A3-92DA1442CB80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{633F1AB5-04D4-47A5-84A3-92DA1442CB80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{633F1AB5-04D4-47A5-84A3-92DA1442CB80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8AD07C6-4F1A-41BC-B56F-C6EB87D9A3F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8AD07C6-4F1A-41BC-B56F-C6EB87D9A3F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8AD07C6-4F1A-41BC-B56F-C6EB87D9A3F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8AD07C6-4F1A-41BC-B56F-C6EB87D9A3F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8826B07-5D5A-4132-A6FF-91012BD76D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8826B07-5D5A-4132-A6FF-91012BD76D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8826B07-5D5A-4132-A6FF-91012BD76D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8826B07-5D5A-4132-A6FF-91012BD76D1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{517BA303-FC96-4D5E-9A0E-165D53B64072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{517BA303-FC96-4D5E-9A0E-165D53B64072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{517BA303-FC96-4D5E-9A0E-165D53B64072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{517BA303-FC96-4D5E-9A0E-165D53B64072}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2709A595-499D-4EDE-BCE0-E02AA51962E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2709A595-499D-4EDE-BCE0-E02AA51962E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2709A595-499D-4EDE-BCE0-E02AA51962E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2709A595-499D-4EDE-BCE0-E02AA51962E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B257B156-7013-4CAE-9E69-7C8AF9048C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B257B156-7013-4CAE-9E69-7C8AF9048C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B257B156-7013-4CAE-9E69-7C8AF9048C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B257B156-7013-4CAE-9E69-7C8AF9048C07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ED169CC-F805-4CAD-98CD-7C4A6A0DB370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ED169CC-F805-4CAD-98CD-7C4A6A0DB370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ED169CC-F805-4CAD-98CD-7C4A6A0DB370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ED169CC-F805-4CAD-98CD-7C4A6A0DB370}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
