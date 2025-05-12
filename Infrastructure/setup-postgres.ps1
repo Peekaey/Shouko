@@ -23,12 +23,11 @@ Write-Host "Database Username: $env:DATABASE_USERNAME"
 Write-Host "Database Password: $env:DATABASE_PASSWORD"
 Write-Host "Database Port: $env:DATABASE_PORT"
 
-
 docker pull postgres:latest
 
 # Run the PostgreSQL container
 Write-Host "Starting PostgreSQL container..."
-if (-not (docker run --name postgres -e POSTGRES_USER=$env:DATABASE_USERNAME -e POSTGRES_PASSWORD=$env:DATABASE_PASSWORD -e POSTGRES_DB=$env:DATABASE_NAME -p $env:DATABASE_PORT:$env:DATABASE_PORT -d postgres:latest)) {
+if (-not (docker run --name $env:DATABASE_NAME -e POSTGRES_USER=$env:DATABASE_USERNAME -e POSTGRES_PASSWORD=$env:DATABASE_PASSWORD -e POSTGRES_DB=$env:DATABASE_NAME -p "$($env:DATABASE_PORT):5432" -d postgres:latest)) {
     Write-Host "Error: Failed to start PostgreSQL container."
     exit 1
 }

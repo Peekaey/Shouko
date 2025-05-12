@@ -8,6 +8,7 @@ using NetCord.Hosting.Services;
 using NetCord.Hosting.Services.ApplicationCommands;
 using NetCord.Rest;
 using NetCord.Services.ApplicationCommands;
+using Shouko.DataService;
 using Shouko.Models;
 
 namespace Shouko;
@@ -17,9 +18,13 @@ public class Program
     public static void Main(string[] args)
     {
         Console.WriteLine("Starting Shouko Bot...");
+        var appSettings = LoadEnv();
+        
         var builder = Host.CreateApplicationBuilder(args);
-        ConfigureServices(builder.Services);
+        ConfigureServices(builder.Services, appSettings);
+        ConfigureDatabaseService(builder.Services,appSettings.ConnectionString);
         var host = builder.Build();
+        InitialiseDatabase(host);
         ConfigureHost(host);
         host.Run();
     }
@@ -51,7 +56,7 @@ public class Program
         
     }
 
-    private static void ConfigureServices(IServiceCollection services)
+    private static void ConfigureServices(IServiceCollection services, ApplicationConfigurationSettings envConfigurations)
     {
         Console.WriteLine("Configuring Services...");
         services.AddLogging(logger =>
@@ -60,9 +65,8 @@ public class Program
             logger.AddConsole();
             logger.AddDebug();
         });
-        var appSettings = LoadEnv();
         
-        services.AddSingleton(appSettings);
+        services.AddSingleton(envConfigurations);
         
         // Bot Related Services
         // Intents
@@ -73,14 +77,14 @@ public class Program
                               | GatewayIntents.DirectMessages
                               | GatewayIntents.MessageContent
                               | GatewayIntents.Guilds;
-            options.Token = appSettings.DiscordToken;
+            options.Token = envConfigurations.DiscordToken;
         });
         
         // Slash Command Service
         services.AddApplicationCommands<SlashCommandInteraction, SlashCommandContext, AutocompleteInteractionContext>();
 
         // Rest Client to support API interaction without responding to an interaction first.
-        services.AddSingleton<RestClient>(serviceProvider => new RestClient(appSettings.EntityToken));
+        services.AddSingleton<RestClient>(serviceProvider => new RestClient(envConfigurations.EntityToken));
         
         
     }
