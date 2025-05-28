@@ -11,4 +11,11 @@ public class ApplicationConfigurationSettings
     public string DatabasePassword { get; set; }
     public int DatabasePort { get; set; }
     public bool Debug { get; set; } = true;
+    public string DeepSeekApiKey { get; set; }
+
+    public string GeminiApiKey { get; set; }
+    public string DeepSeekApiUrl { get; set; }
+    public string GeminiApiUrl { get; set; }
+    public string DeepSeekModel { get; set; }
+    public string GeminiModel { get; set; }
 }

@@ -11,4 +11,11 @@
       <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Shouko.Api\Shouko.Api.csproj" />
+      <ProjectReference Include="..\Shouko.DataService\Shouko.DataService.csproj" />
+      <ProjectReference Include="..\Shouko.Helpers\Shouko.Helpers.csproj" />
+      <ProjectReference Include="..\Shouko.Models\Shouko.Models.csproj" />
+    </ItemGroup>
+
 </Project>

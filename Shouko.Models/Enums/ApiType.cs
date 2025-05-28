@@ -1,8 +1,13 @@
-﻿namespace Shouko.Models.Enums;
+﻿using NetCord.Services.ApplicationCommands;
+
+namespace Shouko.Models.Enums;
 
 public enum ApiType
 {
-    DeepSeek = 0,
-    OpenAi = 1,
-    Gemini = 2
+    [SlashCommandChoice("Gemini")]
+    Gemini = 0,
+    [SlashCommandChoice("DeepSeek")]
+    DeepSeek = 1,
+    [SlashCommandChoice("OpenAI")]
+    OpenAi = 2,
 }

@@ -8,7 +8,11 @@ using NetCord.Hosting.Services;
 using NetCord.Hosting.Services.ApplicationCommands;
 using NetCord.Rest;
 using NetCord.Services.ApplicationCommands;
+using Shouko.Api;
+using Shouko.Api.Interfaces;
+using Shouko.Api.Services;
 using Shouko.DataService;
+using Shouko.Helpers;
 using Shouko.Models;
 
 namespace Shouko;
@@ -79,6 +83,17 @@ public class Program
                               | GatewayIntents.Guilds;
             options.Token = envConfigurations.DiscordToken;
         });
+
+        // services.AddHttpClient();
+        services.AddHttpClient<IApiManager, ApiManager>(client =>
+        {
+            // client.BaseAddress = new Uri("https://api.github.com");
+            client.Timeout = TimeSpan.FromSeconds(60);
+        });
+        
+        services.AddSingleton<IApiService, ApiService>();
+        services.AddSingleton<IApiManager, ApiManager>();
+
         
         // Slash Command Service
         services.AddApplicationCommands<SlashCommandInteraction, SlashCommandContext, AutocompleteInteractionContext>();
@@ -142,6 +157,24 @@ public class Program
                 case "DEBUG":
                     appSettings.Debug = true;
                     break;
+                case "DEEPSEEK_API_KEY":
+                    appSettings.DeepSeekApiKey = parts[1].Trim();
+                    break;
+                case "GEMINI_API_KEY":
+                    appSettings.GeminiApiKey = parts[1].Trim();
+                    break;
+                case "DEEPSEEK_API_URL":
+                    appSettings.DeepSeekApiUrl = parts[1].Trim();
+                    break;
+                case "GEMINI_API_URL":
+                    appSettings.GeminiApiUrl = parts[1].Trim();
+                    break;
+                case "DEEPSEEK_MODEL":
+                    appSettings.DeepSeekModel = parts[1].Trim();
+                    break;
+                case "GEMINI_MODEL":
+                    appSettings.GeminiModel = parts[1].Trim();
+                    break;
                 default:
                     Console.WriteLine($"Unknown .env key found: {key} with value {parts[1].Trim()}");
                     break;
@@ -159,6 +192,18 @@ public class Program
                 Console.WriteLine($"{item.Name}: {item.GetValue(appSettings)}");
             }
         }
+        else
+        {
+            Console.WriteLine("Debug mode is disabled.");
+        }
+        
+        // TODO Add Program Stop if missing specific mandatory values
+        var nullProperties = appSettings.GetType().GetProperties()
+            .Where(p => p.GetValue(appSettings) == null || string.IsNullOrEmpty(p.GetValue(appSettings)?.ToString()))
+            .Select(p => p.Name)
+            .ToList();
+        
+        
         return appSettings;
     }
     
