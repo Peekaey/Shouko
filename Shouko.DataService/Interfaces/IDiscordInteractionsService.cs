@@ -7,5 +7,5 @@ public interface IDiscordInteractionsService
 {
     ulong? GetStoredInteraction(ulong interactionId);
     ServiceResult Save(DiscordInteraction interaction);
-    DiscordInteractionSaveResult SaveAndReturnId(DiscordInteraction interaction);
+    SaveResult SaveAndReturnId(DiscordInteraction interaction);
 }

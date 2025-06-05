@@ -18,7 +18,7 @@ public class ApiResponseBusinessService : IApiResponseBusinessService
         _apiResponsesService = apiResponsesService;
     }
     
-    public ServiceResult SaveApiResponse(ApiType apiType, string model, string inputText, string responseContent, string responseId,
+    public SaveResult SaveApiResponse(ApiType apiType, string model, string inputText, string responseContent, string responseId,
         ApiPromptType apiPromptType, int candidatesTokenCount, int promptTokenCount, bool isSuccess, int? discordInteractionId)
     {
         var apiResponse = new ApiResponse
@@ -42,11 +42,11 @@ public class ApiResponseBusinessService : IApiResponseBusinessService
         {
             apiResponse.ResponseImageContent = responseContent;
         }
-        var saveResult = _apiResponsesService.Save(apiResponse);
+        var saveResult = _apiResponsesService.SaveAndReturnId(apiResponse);
         return saveResult;
     }
 
-    public ServiceResult ConvertApiResponseAndSave<T>(T apiResponseDto, ApiType apiType, ApiPromptType apiPromptType, string inputText, int? discordInteractionId)
+    public SaveResult ConvertApiResponseAndSave<T>(T apiResponseDto, ApiType apiType, ApiPromptType apiPromptType, string inputText, int? discordInteractionId)
     {
         switch (apiType)
         {
@@ -75,11 +75,11 @@ public class ApiResponseBusinessService : IApiResponseBusinessService
                     {
                         apiResponse.ResponseImageContent = geminiResponse.ResponseContent;
                     }
-                    return _apiResponsesService.Save(apiResponse);
+                    return _apiResponsesService.SaveAndReturnId(apiResponse);
                 }
-                return ServiceResult.AsFailure($"Expected type GeminiApiResponseDto but received {typeof(T)}.");
+                return SaveResult.AsFailure($"Expected type GeminiApiResponseDto but received {typeof(T)}.");
             default:
-                throw new NotSupportedException($"Unsupported API type: {apiType}");
+                return SaveResult.AsFailure($"Unsupported API type: {apiType}. Cannot convert and save response.");
         }
     }
     

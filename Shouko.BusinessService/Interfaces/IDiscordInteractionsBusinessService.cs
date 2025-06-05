@@ -6,7 +6,7 @@ namespace Shouko.BusinessService.Interfaces;
 public interface IDiscordInteractionsBusinessService
 {
     Task<InteractionResult> CreateApiTextThread<T>(CreateThreadDto createThreadDto) where T : class;
-    DiscordInteractionSaveResult SaveDiscordInteraction(ulong interactionId, ulong channelId, ulong guildId, ulong userId);
+    SaveResult SaveDiscordInteraction(ulong interactionId, ulong channelId, ulong guildId, ulong userId);
     Task<InteractionResult> CreateApiImageThread<T>(CreateThreadDto createThreadDto) where T : class;
 
 }

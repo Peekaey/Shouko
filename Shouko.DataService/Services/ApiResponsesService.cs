@@ -33,7 +33,7 @@ public class ApiResponsesService : IApiResponsesService
         }
     }
     
-    public ApiResponseSaveResult SaveAndReturnId(ApiResponse apiResponse)
+    public SaveResult SaveAndReturnId(ApiResponse apiResponse)
     {
         try
         {
@@ -42,13 +42,13 @@ public class ApiResponsesService : IApiResponsesService
                 _dataContext.ApiResponses.Add(apiResponse);
                 _dataContext.SaveChanges();
                 transaction.Commit();
-                return ApiResponseSaveResult.AsSuccess(apiResponse.Id);
+                return SaveResult.AsSuccess(apiResponse.Id);
             }
         }
         catch (Exception e)
         {
             _logger.LogError(e, $"Error saving ApiResponse with interaction Id {apiResponse.DiscordInteractionId}", apiResponse.DiscordInteractionId);
-            return ApiResponseSaveResult.AsFailure("Failed to save ApiResponse.");
+            return SaveResult.AsFailure("Failed to save ApiResponse.");
         }
     }
     

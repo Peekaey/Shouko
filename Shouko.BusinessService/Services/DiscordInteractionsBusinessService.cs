@@ -48,7 +48,7 @@ public class DiscordInteractionsBusinessService : IDiscordInteractionsBusinessSe
             }
             var apiResponseSaveResult = _apiResponseBusinessService.ConvertApiResponseAndSave(
                 requestResponse.Response, createThreadDto.ApiType, createThreadDto.ApiPromptType,
-                createThreadDto.InputText, interactionSaveResult.Id);
+                createThreadDto.InputText, interactionSaveResult.SavedEntityId);
             
             if (!apiResponseSaveResult.Success) {
                 _logger.LogError($"Failed to save API response with error: {apiResponseSaveResult.ErrorMessage}", apiResponseSaveResult.ErrorMessage);
@@ -82,7 +82,7 @@ public class DiscordInteractionsBusinessService : IDiscordInteractionsBusinessSe
             
             var apiResponseSaveResult = _apiResponseBusinessService.ConvertApiResponseAndSave(
                 requestResponse.Response, createThreadDto.ApiType, createThreadDto.ApiPromptType, 
-                createThreadDto.InputText, interactionSaveResult.Id);
+                createThreadDto.InputText, interactionSaveResult.SavedEntityId);
             
             if (!apiResponseSaveResult.Success) {
                 _logger.LogError($"Failed to save API response with error: {apiResponseSaveResult.ErrorMessage}", apiResponseSaveResult.ErrorMessage);
@@ -98,7 +98,7 @@ public class DiscordInteractionsBusinessService : IDiscordInteractionsBusinessSe
             return InteractionResult.AsFileFailure("Failed to convert API response to image", createThreadDto.ApiPromptType);
     }    
     
-    public DiscordInteractionSaveResult SaveDiscordInteraction(ulong interactionId, ulong channelId, ulong guildId, ulong userId)
+    public SaveResult SaveDiscordInteraction(ulong interactionId, ulong channelId, ulong guildId, ulong userId)
     {
         var interaction = new DiscordInteraction
         {

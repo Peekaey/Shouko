@@ -5,5 +5,5 @@ using Shouko.Models.Results;
 public interface IApiResponsesService
 {
     ServiceResult Save(ApiResponse apiResponse);
-    ApiResponseSaveResult SaveAndReturnId(ApiResponse apiResponse);
+    SaveResult SaveAndReturnId(ApiResponse apiResponse);
 }

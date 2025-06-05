@@ -37,7 +37,7 @@ public class DiscordInteractionsService : IDiscordInteractionsService
         }
     }
 
-    public DiscordInteractionSaveResult SaveAndReturnId(DiscordInteraction interaction)
+    public SaveResult SaveAndReturnId(DiscordInteraction interaction)
     {
         try
         {
@@ -46,13 +46,13 @@ public class DiscordInteractionsService : IDiscordInteractionsService
                 _dataContext.DiscordInteractions.Add(interaction);
                 _dataContext.SaveChanges();
                 transaction.Commit();
-                return DiscordInteractionSaveResult.AsSuccess(interaction.Id);
+                return SaveResult.AsSuccess(interaction.Id);
             }
         }
         catch (Exception e)
         {
             _logger.LogError(e, $"Error saving Discord interaction with ID {interaction.InteractionId}", interaction.InteractionId);
-            return DiscordInteractionSaveResult.AsFailure("Failed to save Discord interaction.");
+            return SaveResult.AsFailure("Failed to save Discord interaction.");
             
         }
     }
