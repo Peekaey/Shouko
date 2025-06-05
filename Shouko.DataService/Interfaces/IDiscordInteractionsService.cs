@@ -5,6 +5,7 @@ using Shouko.Models.Results;
 
 public interface IDiscordInteractionsService
 {
-    long? GetStoredInteraction(long interactionId);
+    ulong? GetStoredInteraction(ulong interactionId);
     ServiceResult Save(DiscordInteraction interaction);
+    DiscordInteractionSaveResult SaveAndReturnId(DiscordInteraction interaction);
 }

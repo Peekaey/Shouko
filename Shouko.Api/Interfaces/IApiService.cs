@@ -5,5 +5,5 @@ namespace Shouko.Api.Interfaces;
 
 public interface IApiService
 {
-    Task<ApiResult<ApiResponseDto>> SendRequest(CreateThreadDto requestDto);
+    Task<ApiResult<T>> SendRequest<T>(CreateThreadDto requestDto) where T : class;
 }

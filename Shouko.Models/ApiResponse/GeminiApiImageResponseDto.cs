@@ -1,8 +1,8 @@
-﻿
+﻿using System.Text.Json.Serialization;
 
-using System.Text.Json.Serialization;
+namespace Shouko.Models.ApiResponse;
 
-public class GeminiApiTextResponse
+public class GeminiApiImageResponse
 {
     [JsonPropertyName("candidates")]
     public List<Candidate> Candidates { get; set; }
@@ -20,13 +20,16 @@ public class GeminiApiTextResponse
 public class Candidate
 {
     [JsonPropertyName("content")]
-    public ContentContent Content { get; set; }
+    public Content Content { get; set; }
 
     [JsonPropertyName("finishReason")]
     public string FinishReason { get; set; }
+
+    [JsonPropertyName("index")]
+    public int Index { get; set; }
 }
 
-public class ContentContent
+public class Content
 {
     [JsonPropertyName("parts")]
     public List<Part> Parts { get; set; }
@@ -37,8 +40,17 @@ public class ContentContent
 
 public class Part
 {
-    [JsonPropertyName("text")]
-    public string Text { get; set; }
+    [JsonPropertyName("inlineData")]
+    public InlineData InlineData { get; set; }
+}
+
+public class InlineData
+{
+    [JsonPropertyName("mimeType")]
+    public string MimeType { get; set; }
+
+    [JsonPropertyName("data")]
+    public string Data { get; set; }
 }
 
 public class UsageMetadata
@@ -47,7 +59,7 @@ public class UsageMetadata
     public int PromptTokenCount { get; set; }
 
     [JsonPropertyName("candidatesTokenCount")]
-    public int? CandidatesTokenCount { get; set; }
+    public int CandidatesTokenCount { get; set; }
 
     [JsonPropertyName("totalTokenCount")]
     public int TotalTokenCount { get; set; }

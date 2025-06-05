@@ -6,8 +6,8 @@ public enum ApiType
 {
     [SlashCommandChoice("Gemini")]
     Gemini = 0,
-    [SlashCommandChoice("DeepSeek")]
-    DeepSeek = 1,
-    [SlashCommandChoice("OpenAI")]
-    OpenAi = 2,
+    // [SlashCommandChoice("DeepSeek")]
+    // DeepSeek = 1,
+    // [SlashCommandChoice("OpenAI")]
+    // OpenAi = 2,
 }

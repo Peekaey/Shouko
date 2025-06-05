@@ -17,5 +17,10 @@ public class ApplicationConfigurationSettings
     public string DeepSeekApiUrl { get; set; }
     public string GeminiApiUrl { get; set; }
     public string DeepSeekModel { get; set; }
-    public string GeminiModel { get; set; }
+    public string GeminiTextModel { get; set; }
+    public string GeminiImageModel { get; set; }
+
+    public readonly string DefaultPrompt = "When answering the prompt, can you start each section of the response " +
+                                           "with \"Part\" and no number as well as not acknowledging " +
+                                           "the instructions in the response";
 }

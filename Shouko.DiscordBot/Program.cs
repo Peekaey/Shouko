@@ -11,8 +11,11 @@ using NetCord.Services.ApplicationCommands;
 using Shouko.Api;
 using Shouko.Api.Interfaces;
 using Shouko.Api.Services;
+using Shouko.BusinessService.Interfaces;
+using Shouko.BusinessService.Services;
 using Shouko.DataService;
 using Shouko.Helpers;
+using Shouko.Helpers.Extensions;
 using Shouko.Models;
 
 namespace Shouko;
@@ -93,6 +96,12 @@ public class Program
         
         services.AddSingleton<IApiService, ApiService>();
         services.AddSingleton<IApiManager, ApiManager>();
+        services.AddSingleton<IApiResponseHelper, ApiResponseHelper>();
+        services.AddSingleton<IDiscordInteractionsService, DiscordInteractionsService>();
+        services.AddSingleton<IDiscordInteractionsBusinessService, DiscordInteractionsBusinessService>();
+        services.AddSingleton<IApiResponseHelper, ApiResponseHelper>();
+        services.AddSingleton<IApiResponseBusinessService, ApiResponseBusinessService>();
+        services.AddSingleton<IApiResponsesService, ApiResponsesService>();
 
         
         // Slash Command Service
@@ -172,8 +181,11 @@ public class Program
                 case "DEEPSEEK_MODEL":
                     appSettings.DeepSeekModel = parts[1].Trim();
                     break;
-                case "GEMINI_MODEL":
-                    appSettings.GeminiModel = parts[1].Trim();
+                case "GEMINI_TEXT_MODEL":
+                    appSettings.GeminiTextModel = parts[1].Trim();
+                    break;
+                case "GEMINI_IMAGE_MODEL":
+                    appSettings.GeminiImageModel = parts[1].Trim();
                     break;
                 default:
                     Console.WriteLine($"Unknown .env key found: {key} with value {parts[1].Trim()}");

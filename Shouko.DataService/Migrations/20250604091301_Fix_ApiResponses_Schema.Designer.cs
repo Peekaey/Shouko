@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Shouko.DataService;
@@ -11,9 +12,11 @@ using Shouko.DataService;
 namespace Shouko.DataService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250604091301_Fix_ApiResponses_Schema")]
+    partial class Fix_ApiResponses_Schema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,12 +45,15 @@ namespace Shouko.DataService.Migrations
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("DiscordInteractionId")
+                    b.Property<int>("DiscordInteractionId")
                         .HasColumnType("integer");
 
                     b.Property<string>("InputText")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<decimal>("InteractionId")
+                        .HasColumnType("numeric(20,0)");
 
                     b.Property<bool>("IsSuccess")
                         .HasColumnType("boolean");
@@ -63,10 +69,8 @@ namespace Shouko.DataService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ResponseImageContent")
-                        .HasColumnType("text");
-
                     b.Property<string>("ResponseText")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -108,7 +112,9 @@ namespace Shouko.DataService.Migrations
                 {
                     b.HasOne("Shouko.Models.DatabaseModels.DiscordInteraction", "DiscordInteraction")
                         .WithMany()
-                        .HasForeignKey("DiscordInteractionId");
+                        .HasForeignKey("DiscordInteractionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("DiscordInteraction");
                 });

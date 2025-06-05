@@ -6,6 +6,7 @@ public class ApiResult<T>
     public bool IsSuccess { get; set; }
     public T Response { get; set; }
     public string? ErrorMessage { get; set; }
+    public List<string> DiscordResponseMessage { get; set; }
     
     public ApiResult(bool isSuccess, T response, string? errorMessage = null)
     {

@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Shouko.Api.Interfaces;
 using Shouko.Helpers;
@@ -29,9 +30,6 @@ public class ApiManager : IApiManager
          case ApiType.Gemini:
             return _applicationConfigurationSettings.GeminiApiKey;
             break;
-         case ApiType.DeepSeek:
-            return _applicationConfigurationSettings.DeepSeekApiKey;
-            break;
          default:
             return string.Empty;
             break;
@@ -45,26 +43,44 @@ public class ApiManager : IApiManager
          case ApiType.Gemini:
             return _applicationConfigurationSettings.GeminiApiUrl;
             break;
-         case ApiType.DeepSeek:
-            return _applicationConfigurationSettings.DeepSeekApiUrl;
+         default:
             return string.Empty;
             break;
+      }
+   }
+   
+   public string GetApiModel(ApiType apiType, ApiPromptType apiPromptType)
+   {
+      switch (apiType)
+      {
+         case ApiType.Gemini:
+            if (apiPromptType == ApiPromptType.Text)
+            {
+               return _applicationConfigurationSettings.GeminiTextModel;
+            }
+            else
+            {
+               return _applicationConfigurationSettings.GeminiImageModel;
+            }
          default:
             return string.Empty;
             break;
       }
    }
 
-   public string GetApiModel(ApiType apiType)
+   public string PrepareRequestJson(ApiPromptType apiPromptType, ApiType apiType, string textInput)
    {
       switch (apiType)
       {
          case ApiType.Gemini:
-            return _applicationConfigurationSettings.GeminiModel;
-            break;
-         case ApiType.DeepSeek:
-            return _applicationConfigurationSettings.DeepSeekModel;
-            break;
+            if (apiPromptType == ApiPromptType.Text)
+            {
+               return PrepareGeminiTextRequestJson(textInput);
+            }
+            else
+            {
+               return PrepareGeminiImageRequestJson(textInput);
+            }
          default:
             return string.Empty;
             break;
@@ -79,8 +95,9 @@ public class ApiManager : IApiManager
       return combinedUrl;
    }
 
-   public string PrepareGeminiRequestJson(string textInput)
+   public string PrepareGeminiTextRequestJson(string textInput)
    {
+      var inputPrompt = _applicationConfigurationSettings.DefaultPrompt + "\n" + textInput;
       var requestJson = new
       {
          contents = new[]
@@ -92,7 +109,7 @@ public class ApiManager : IApiManager
                {
                   new
                   {
-                     text = textInput
+                     text = inputPrompt
                   }
                }
             }
@@ -105,8 +122,33 @@ public class ApiManager : IApiManager
 
       return System.Text.Json.JsonSerializer.Serialize(requestJson);
    }
-   
-   
-   
-      
+
+   public string PrepareGeminiImageRequestJson(string textInput)
+   {
+      var requestJson = new
+      {
+         contents = new[]
+         {
+            new
+            {
+               parts = new[]
+               {
+                  new
+                  {
+                     text = textInput
+                  }
+               }
+            }
+         },
+         generationConfig = new
+         {
+            responseModalities = new[]
+            {
+               "TEXT",
+               "IMAGE"
+            }
+         }
+      };
+      return JsonSerializer.Serialize(requestJson);
+   }
 }

@@ -16,4 +16,8 @@
       <ProjectReference Include="..\Shouko.Models\Shouko.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Integrations\" />
+    </ItemGroup>
+
 </Project>

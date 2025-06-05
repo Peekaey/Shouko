@@ -6,9 +6,10 @@ public class CreateThreadDto
 {
     public string InputText { get; set; }
     public ApiType ApiType { get; set; }
+    public ApiPromptType ApiPromptType { get; set; }
     // Discord MetaData
-    public long InteractionId { get; set; }
-    public long ChannelId { get; set; }
-    public long GuildId { get; set; }
-    public long UserId { get; set; }
+    public ulong InteractionId { get; set; }
+    public ulong ChannelId { get; set; }
+    public ulong GuildId { get; set; }
+    public ulong UserId { get; set; }
 }

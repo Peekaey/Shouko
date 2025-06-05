@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Shouko.DataService;
@@ -11,9 +12,11 @@ using Shouko.DataService;
 namespace Shouko.DataService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250529131649_Rename_ApiResponses_ApiPromptType_Column")]
+    partial class Rename_ApiResponses_ApiPromptType_Column
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,12 +45,15 @@ namespace Shouko.DataService.Migrations
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("DiscordInteractionId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("InputText")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<long>("InteractionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("InteractionId1")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsSuccess")
                         .HasColumnType("boolean");
@@ -63,15 +69,13 @@ namespace Shouko.DataService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ResponseImageContent")
-                        .HasColumnType("text");
-
                     b.Property<string>("ResponseText")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiscordInteractionId");
+                    b.HasIndex("InteractionId1");
 
                     b.ToTable("ApiResponses");
                 });
@@ -84,20 +88,20 @@ namespace Shouko.DataService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("ChannelId")
-                        .HasColumnType("numeric(20,0)");
+                    b.Property<long>("ChannelId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("GuildId")
-                        .HasColumnType("numeric(20,0)");
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
 
-                    b.Property<decimal>("InteractionId")
-                        .HasColumnType("numeric(20,0)");
+                    b.Property<long>("InteractionId")
+                        .HasColumnType("bigint");
 
-                    b.Property<decimal>("UserId")
-                        .HasColumnType("numeric(20,0)");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -106,11 +110,13 @@ namespace Shouko.DataService.Migrations
 
             modelBuilder.Entity("Shouko.Models.DatabaseModels.ApiResponse", b =>
                 {
-                    b.HasOne("Shouko.Models.DatabaseModels.DiscordInteraction", "DiscordInteraction")
+                    b.HasOne("Shouko.Models.DatabaseModels.DiscordInteraction", "Interaction")
                         .WithMany()
-                        .HasForeignKey("DiscordInteractionId");
+                        .HasForeignKey("InteractionId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("DiscordInteraction");
+                    b.Navigation("Interaction");
                 });
 #pragma warning restore 612, 618
         }
