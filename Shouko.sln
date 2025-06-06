@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shouko.BusinessService", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shouko.BackgroundService", "Shouko.BackgroundService\Shouko.BackgroundService.csproj", "{7ED169CC-F805-4CAD-98CD-7C4A6A0DB370}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shouko.Tests", "Shouko.Tests\Shouko.Tests.csproj", "{EB842B2D-A749-4ECA-ACE8-4E6A4E4FFD61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{7ED169CC-F805-4CAD-98CD-7C4A6A0DB370}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ED169CC-F805-4CAD-98CD-7C4A6A0DB370}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7ED169CC-F805-4CAD-98CD-7C4A6A0DB370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB842B2D-A749-4ECA-ACE8-4E6A4E4FFD61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB842B2D-A749-4ECA-ACE8-4E6A4E4FFD61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB842B2D-A749-4ECA-ACE8-4E6A4E4FFD61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB842B2D-A749-4ECA-ACE8-4E6A4E4FFD61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
