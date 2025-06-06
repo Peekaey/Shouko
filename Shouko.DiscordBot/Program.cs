@@ -1,6 +1,4 @@
-using System.Collections;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using NetCord;
 using NetCord.Gateway;
 using NetCord.Hosting.Gateway;
@@ -41,13 +39,13 @@ public class Program
         Console.WriteLine("Configuring Host...");
         
         // Additional NetCord Configuration - AddModules to automatically register command modules
-        // UseGatewayEventHandlers to automatically register gateway event handlers (Respond to Interactions, etc)
+        // UseGatewayEventHandlers to automatically register gateway event handlers (Respond to Interactions, etc..)
         host.AddModules(typeof(Program).Assembly);
         host.UseGatewayEventHandlers();
         
         // Additional Functionality that will be run right after the bot starts
         var lifetime = host.Services.GetRequiredService<IHostApplicationLifetime>();
-        lifetime.ApplicationStarted.Register(async void () =>
+        lifetime.ApplicationStarted.Register(void () =>
         {
             try
             {
@@ -108,7 +106,7 @@ public class Program
         services.AddApplicationCommands<SlashCommandInteraction, SlashCommandContext, AutocompleteInteractionContext>();
 
         // Rest Client to support API interaction without responding to an interaction first.
-        services.AddSingleton<RestClient>(serviceProvider => new RestClient(envConfigurations.EntityToken));
+        services.AddSingleton<RestClient>(_ => new RestClient(envConfigurations.EntityToken));
         
         
     }
@@ -194,7 +192,7 @@ public class Program
             
         }
         
-        if (appSettings.Debug == true)
+        if (appSettings.Debug)
         {
             Console.WriteLine("Debug mode is enabled.");
             Console.WriteLine("Printing Environment Variables:");

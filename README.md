@@ -3,6 +3,5 @@
 
 ## TODO
 - Implement background service as guardrail against gemini api usage
-- Fix CandidateToken/PromptToken Count when saving in ApiResponse 
-- Remove Worker.cs
-- Move CreateApiText/ImageThread from DiscordInteractionsBusinessService to ApiServiceBusinessService to interface with ApiService 
+- Fix CandidateToken/PromptToken Count when saving in ApiResponse
+- Fix Warnings and Add Required/nullable keywords~~~~

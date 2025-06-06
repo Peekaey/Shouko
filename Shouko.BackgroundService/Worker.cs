@@ -1,6 +1,8 @@
-namespace Shouko;
+﻿using Microsoft.Extensions.Logging;
 
-public class Worker : BackgroundService
+namespace Shouko.BackgroundService;
+
+public class Worker : Microsoft.Extensions.Hosting.BackgroundService
 {
     private readonly ILogger<Worker> _logger;
 

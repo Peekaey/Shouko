@@ -12,14 +12,15 @@ public class GetApiTextResponse : ApplicationCommandModule<SlashCommandContext>
 {
     private readonly ILogger<GetApiTextResponse> _logger;
     private readonly ApplicationCommandService<SlashCommandContext> _commandService;
-    private readonly IDiscordInteractionsBusinessService _discordInteractionsBusinessService;
+    private readonly IApiServiceBusinessService _apiServiceBusinessService;
+
 
     public GetApiTextResponse(ILogger<GetApiTextResponse> logger,
-        ApplicationCommandService<SlashCommandContext> commandService, IApiService apiService, IDiscordInteractionsBusinessService discordInteractionsBusinessService)
+        ApplicationCommandService<SlashCommandContext> commandService, IApiServiceBusinessService apiServiceBusinessService)
     {
         _logger = logger;
         _commandService = commandService;
-        _discordInteractionsBusinessService = discordInteractionsBusinessService;
+        _apiServiceBusinessService = apiServiceBusinessService;
     }
 
     [SlashCommand("getapitextresponse", "Queries the specified API with the provided text input and returns text response")]
@@ -33,7 +34,7 @@ public class GetApiTextResponse : ApplicationCommandModule<SlashCommandContext>
         {
             _logger.LogActionTraceStart(Context, "SendGetApiTextResponse");
             await Context.Interaction.SendResponseAsync(InteractionCallback.DeferredMessage());
-            var response = await _discordInteractionsBusinessService.CreateApiTextThread<object>(new CreateThreadDto
+            var response = await _apiServiceBusinessService.CreateApiTextThread<object>(new CreateThreadDto
             {
                 ApiType = apiType,
                 InputText = textInput,

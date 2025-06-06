@@ -11,15 +11,14 @@ public class GetApiImageResponse : ApplicationCommandModule<SlashCommandContext>
 {
     private readonly ILogger<GetApiImageResponse> _logger;
     private readonly ApplicationCommandService<SlashCommandContext> _commandService;
-    private readonly IDiscordInteractionsBusinessService _discordInteractionsBusinessService;
+    private readonly IApiServiceBusinessService _apiServiceBusinessService;
 
     public GetApiImageResponse(ILogger<GetApiImageResponse> logger,
-        ApplicationCommandService<SlashCommandContext> commandService,
-        IDiscordInteractionsBusinessService discordInteractionsBusinessService)
+        ApplicationCommandService<SlashCommandContext> commandService, IApiServiceBusinessService apiServiceBusinessService)
     {
         _logger = logger;
         _commandService = commandService;
-        _discordInteractionsBusinessService = discordInteractionsBusinessService;
+        _apiServiceBusinessService = apiServiceBusinessService;
     }
 
     [SlashCommand("getapiimageresponse", "Queries the specified API with the provided text input and returns image response")]
@@ -33,7 +32,7 @@ public class GetApiImageResponse : ApplicationCommandModule<SlashCommandContext>
         {
             _logger.LogActionTraceStart(Context, "SendGetApiImageResponse");
             await Context.Interaction.SendResponseAsync((InteractionCallback.DeferredMessage()));
-            var response = await _discordInteractionsBusinessService.CreateApiImageThread<object>
+            var response = await _apiServiceBusinessService.CreateApiImageThread<object>
                            (new CreateThreadDto
                            {
                                ApiType = apiType,

@@ -3,6 +3,7 @@
 
 using Microsoft.Extensions.Logging;
 using Shouko.Api.Interfaces;
+using Shouko.BusinessService.Interfaces;
 using Shouko.Models.DatabaseModels;
 using Shouko.Models.Enums;
 using Shouko.Models.Results;
