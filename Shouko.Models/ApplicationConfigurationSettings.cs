@@ -20,6 +20,17 @@ public class ApplicationConfigurationSettings
     public string GeminiTextModel { get; set; }
     public string GeminiImageModel { get; set; }
 
+    public int? GeminiTextModelMinuteLimit { get; set; }
+    public int? GeminiImageModelMinuteLimit { get; set; }
+    
+    public int? GeminiTextModelDailyLimit { get; set; }
+    public int? GeminiImageModelDailyLimit { get; set; }
+
+    public bool EnableGeminiTextModelDailyLimit { get; set; } = false;
+    public bool EnableGeminiTextModelMinuteLimit { get; set; } = false;
+    public bool EnableGeminiImageModelMinuteLimit { get; set; } = false;
+    public bool EnableGeminiImageModelDailyLimit { get; set; } = false;
+
     public readonly string DefaultPrompt = "When answering the prompt, can you start each section of the response " +
                                            "with \"Part\" and no number as well as not acknowledging " +
                                            "the instructions in the response";

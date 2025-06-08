@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Shouko.DataService;
@@ -11,9 +12,11 @@ using Shouko.DataService;
 namespace Shouko.DataService.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250607120152_Add_Additional_ApiRequestLimitCounter_Properties")]
+    partial class Add_Additional_ApiRequestLimitCounter_Properties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,9 +42,6 @@ namespace Shouko.DataService.Migrations
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("boolean");
-
                     b.HasKey("Id");
 
                     b.ToTable("ApiRequestCounters");
@@ -61,9 +61,6 @@ namespace Shouko.DataService.Migrations
                     b.Property<int>("ApiType")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("LimitCounterType")
                         .HasColumnType("integer");
 
@@ -72,7 +69,7 @@ namespace Shouko.DataService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApiRequestLimitCounters");
+                    b.ToTable("ApiRequestStartCounters");
                 });
 
             modelBuilder.Entity("Shouko.Models.DatabaseModels.ApiResponse", b =>

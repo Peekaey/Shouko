@@ -17,4 +17,10 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Shouko.BusinessService\Shouko.BusinessService.csproj" />
+      <ProjectReference Include="..\Shouko.DataService\Shouko.DataService.csproj" />
+      <ProjectReference Include="..\Shouko.Models\Shouko.Models.csproj" />
+    </ItemGroup>
+
 </Project>

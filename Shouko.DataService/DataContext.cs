@@ -10,5 +10,7 @@ public class DataContext : DbContext
     }
     public DbSet<DiscordInteraction> DiscordInteractions { get; set; }
     public DbSet<ApiResponse> ApiResponses { get; set; }
+    public DbSet<ApiRequestCounter> ApiRequestCounters { get; set; }
+    public DbSet<ApiRequestLimitCounter> ApiRequestLimitCounters { get; set; }
     
 }

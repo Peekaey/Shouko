@@ -9,12 +9,16 @@ using NetCord.Services.ApplicationCommands;
 using Shouko.Api;
 using Shouko.Api.Interfaces;
 using Shouko.Api.Services;
+using Shouko.BackgroundService;
 using Shouko.BusinessService.Interfaces;
 using Shouko.BusinessService.Services;
 using Shouko.DataService;
+using Shouko.DataService.Interfaces;
+using Shouko.DataService.Services;
 using Shouko.Helpers;
 using Shouko.Helpers.Extensions;
 using Shouko.Models;
+using Shouko.Models.Enums;
 
 namespace Shouko;
 
@@ -100,7 +104,20 @@ public class Program
         services.AddSingleton<IApiResponseHelper, ApiResponseHelper>();
         services.AddSingleton<IApiResponseBusinessService, ApiResponseBusinessService>();
         services.AddSingleton<IApiResponsesService, ApiResponsesService>();
-
+        services.AddSingleton<IApiRequestLimitCounterService, ApiRequestLimitCounterService>();
+        services.AddSingleton<IApiRequestLimitCounterBusinessService, ApiRequestLimitCounterBusinessService>();
+        services.AddSingleton<IApiServiceBusinessService, ApiServiceBusinessService>();
+        services.AddSingleton<IApiRequestCountersBusinessService, ApiRequestCountersBusinessService>();
+        services.AddSingleton<IApiRequestCountersService, ApiRequestCountersService>();
+        
+        
+        if (envConfigurations.EnableGeminiTextModelDailyLimit ||
+            envConfigurations.EnableGeminiTextModelMinuteLimit ||
+            envConfigurations.EnableGeminiImageModelDailyLimit ||
+            envConfigurations.EnableGeminiImageModelMinuteLimit)
+        {
+            services.AddHostedService<ApiRequestLimitBackgroundWorker>();
+        }
         
         // Slash Command Service
         services.AddApplicationCommands<SlashCommandInteraction, SlashCommandContext, AutocompleteInteractionContext>();
@@ -185,6 +202,18 @@ public class Program
                 case "GEMINI_IMAGE_MODEL":
                     appSettings.GeminiImageModel = parts[1].Trim();
                     break;
+                case "GEMINI_TEXT_MODEL_MINUTE_LIMIT":
+                    appSettings.GeminiTextModelMinuteLimit = int.Parse(parts[1].Trim());
+                    break;
+                case "GEMINI_IMAGE_MODEL_MINUTE_LIMIT":
+                    appSettings.GeminiImageModelMinuteLimit = int.Parse(parts[1].Trim());
+                    break;
+                case "GEMINI_TEXT_MODEL_DAILY_LIMIT":
+                    appSettings.GeminiTextModelDailyLimit = int.Parse(parts[1].Trim());
+                    break;
+                case "GEMINI_IMAGE_MODEL_DAILY_LIMIT":
+                    appSettings.GeminiImageModelDailyLimit = int.Parse(parts[1].Trim());
+                    break;
                 default:
                     Console.WriteLine($"Unknown .env key found: {key} with value {parts[1].Trim()}");
                     break;
@@ -205,6 +234,26 @@ public class Program
         else
         {
             Console.WriteLine("Debug mode is disabled.");
+        }
+
+        if (appSettings.GeminiTextModelDailyLimit != 0)
+        {
+            appSettings.EnableGeminiTextModelDailyLimit = true;
+        }
+        
+        if (appSettings.GeminiTextModelMinuteLimit != 0)
+        {
+            appSettings.EnableGeminiTextModelMinuteLimit = true;
+        }
+        
+        if (appSettings.GeminiImageModelDailyLimit != 0)
+        {
+            appSettings.EnableGeminiImageModelDailyLimit = true;
+        }
+        
+        if (appSettings.GeminiImageModelMinuteLimit != 0)
+        {
+            appSettings.EnableGeminiImageModelMinuteLimit = true;
         }
         
         // TODO Add Program Stop if missing specific mandatory values

@@ -1,10 +1,7 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Shouko.Api.Interfaces;
-using Shouko.Helpers;
 using Shouko.Models;
-using Shouko.Models.DTOs;
 using Shouko.Models.Enums;
 
 namespace Shouko.Api;
@@ -29,10 +26,8 @@ public class ApiManager : IApiManager
       {
          case ApiType.Gemini:
             return _applicationConfigurationSettings.GeminiApiKey;
-            break;
          default:
             return string.Empty;
-            break;
       }
    }
 
@@ -42,10 +37,8 @@ public class ApiManager : IApiManager
       {
          case ApiType.Gemini:
             return _applicationConfigurationSettings.GeminiApiUrl;
-            break;
          default:
             return string.Empty;
-            break;
       }
    }
    
@@ -64,7 +57,6 @@ public class ApiManager : IApiManager
             }
          default:
             return string.Empty;
-            break;
       }
    }
 
@@ -83,7 +75,6 @@ public class ApiManager : IApiManager
             }
          default:
             return string.Empty;
-            break;
       }
    }
 
@@ -120,7 +111,7 @@ public class ApiManager : IApiManager
          }
       };
 
-      return System.Text.Json.JsonSerializer.Serialize(requestJson);
+      return JsonSerializer.Serialize(requestJson);
    }
 
    public string PrepareGeminiImageRequestJson(string textInput)
