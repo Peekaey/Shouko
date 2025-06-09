@@ -6,7 +6,7 @@
 - Dedicated separate command for text & image responses
 - Support for over 2000 character responses by splitting responses into multiple messages chained with a [Part] Identifier
 - Logging of all discord interactions, prompts, as well as API responses and associated metadata to a postgres database
-- Guardrail/API request limit by entering RPM and/or RPD limit (persists across application shutdown and cleared by a background worker)
+- Guardrail/API request limit by entering RPM and/or RPD limit (persists across application shutdown and cleared regularly by a background worker)
 - Support for default prompt behaviour (customisable in ApplicationConfigurationSettings.cs)
 - Docker Support
 
