@@ -28,18 +28,8 @@ public class ApiRequestCountersBusinessService : IApiRequestCountersBusinessServ
         };
         return _apiRequestCountersService.SaveAndReturnId(apiRequestCounter);
     }
-
-    public bool IsDailyApiLimitReached()
-    {
-        return false;
-    }
-
-    public bool IsMinuteApiLimitReached()
-    {
-        return false;
-    }
-
-    IQueryable<ApiRequestCounter> GetAllByType(ApiPromptType apiPromptType, ApiType apiType)
+    
+    public IQueryable<ApiRequestCounter> GetAllByType(ApiPromptType apiPromptType, ApiType apiType)
     {
         return _apiRequestCountersService.GetAllByType(apiPromptType, apiType);
     }

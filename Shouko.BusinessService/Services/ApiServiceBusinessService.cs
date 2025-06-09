@@ -14,37 +14,40 @@ public class ApiServiceBusinessService : IApiServiceBusinessService
     private readonly IDiscordInteractionsBusinessService _discordInteractionsBusinessService;
     private readonly IApiResponseBusinessService _apiResponseBusinessService;
     private readonly IApiResponseHelper _apiResponseHelper;
-    private readonly ApiRequestCountersBusinessService _apiRequestCountersBusinessService;
+    private readonly IApiRequestLimitCounterBusinessService _apiRequestLimitCounterBusinessService;
+    private readonly IApiRequestCountersBusinessService _apiRequestCountersBusinessService;
     
     public ApiServiceBusinessService(ILogger<ApiServiceBusinessService> logger, IApiService apiService,
         IDiscordInteractionsBusinessService discordInteractionsBusinessService,
         IApiResponseBusinessService apiResponseBusinessService, IApiResponseHelper apiResponseHelper,
-        ApiRequestCountersBusinessService apiRequestCountersBusinessService)
+        IApiRequestLimitCounterBusinessService apiRequestLimitCounterBusinessService, 
+        IApiRequestCountersBusinessService apiRequestCountersBusinessService)
     {
         _logger = logger;
         _apiService = apiService;
         _discordInteractionsBusinessService = discordInteractionsBusinessService;
         _apiResponseBusinessService = apiResponseBusinessService;
         _apiResponseHelper = apiResponseHelper;
+        _apiRequestLimitCounterBusinessService = apiRequestLimitCounterBusinessService;
         _apiRequestCountersBusinessService = apiRequestCountersBusinessService;
     }
     
     public async Task<InteractionResult> CreateApiTextThread<T>(CreateThreadDto  createThreadDto) where T : class
     {
-        var isMinuteLimitReached = _apiRequestCountersBusinessService.IsMinuteApiLimitReached();
+        var isMinuteLimitReached = _apiRequestLimitCounterBusinessService.IsMinuteRequestLimitReached(createThreadDto.ApiPromptType, createThreadDto.ApiType);
         if (isMinuteLimitReached)
         {
             _logger.LogWarning("API request limit reached for the minute.");
             return InteractionResult.AsTextFailure("API request limit reached for the minute.", createThreadDto.ApiPromptType);
         }
-        
-        var isDailyLimitReached = _apiRequestCountersBusinessService.IsDailyApiLimitReached();
+        var isDailyLimitReached = _apiRequestLimitCounterBusinessService.IsDailyRequestLimitReached(createThreadDto.ApiPromptType, createThreadDto.ApiType);
         if (isDailyLimitReached)
         {
             _logger.LogWarning("API request limit reached for the day.");
             return InteractionResult.AsTextFailure("API request limit reached for the day.", createThreadDto.ApiPromptType);
         }
         var requestResponse = await _apiService.SendRequest<T>(createThreadDto);
+        
         var apiRequestSaveResult = _apiRequestCountersBusinessService.SaveAndReturnId(createThreadDto.ApiPromptType, createThreadDto.ApiType);
         
         if (!requestResponse.IsSuccess)
@@ -78,14 +81,14 @@ public class ApiServiceBusinessService : IApiServiceBusinessService
 
     public async Task<InteractionResult> CreateApiImageThread<T>(CreateThreadDto createThreadDto) where T : class
     {
-        var isMinuteLimitReached = _apiRequestCountersBusinessService.IsMinuteApiLimitReached();
+        var isMinuteLimitReached = _apiRequestLimitCounterBusinessService.IsMinuteRequestLimitReached(createThreadDto.ApiPromptType, createThreadDto.ApiType);
         if (isMinuteLimitReached)
         {
             _logger.LogWarning("API request limit reached for the minute.");
             return InteractionResult.AsTextFailure("API request limit reached for the minute.", createThreadDto.ApiPromptType);
         }
         
-        var isDailyLimitReached = _apiRequestCountersBusinessService.IsDailyApiLimitReached();
+        var isDailyLimitReached = _apiRequestLimitCounterBusinessService.IsDailyRequestLimitReached(createThreadDto.ApiPromptType, createThreadDto.ApiType);
         if (isDailyLimitReached)
         {
             _logger.LogWarning("API request limit reached for the day.");

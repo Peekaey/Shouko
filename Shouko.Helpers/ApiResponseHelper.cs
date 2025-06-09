@@ -23,13 +23,26 @@ public class ApiResponseHelper : IApiResponseHelper
             {
                 parts[i] = parts[i].TrimStart('\n', '\r', ' ');
             }
-            
-            for (int i = 0; i < parts.Length; i++)
+
+            if (!parts.Any())
             {
-                var countText = "[Part: " + (i + 1) + " of " + parts.Length + "]";
-                // Add the count text to the beginning of each part
-                discordMessages.Add(countText + "\n" + parts[i]);
-                
+                discordMessages.Add("Response from Gemini is empty or invalid.");
+            }
+
+            if (parts.Count() == 1)
+            {
+                // Ignore adding [Part] Identifier as the response is small enough to fit in one message
+                discordMessages.Add(parts[0]);
+            }
+            else
+            {
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    var countText = "[Part: " + (i + 1) + " of " + parts.Length + "]";
+                    // Add the count text to the beginning of each part
+                    discordMessages.Add(countText + "\n" + parts[i]);
+
+                }
             }
 
             return discordMessages;
