@@ -55,4 +55,5 @@
 ![Image-Response](https://github.com/Peekaey/Shouko/blob/master/Images/Image-response.png)
 ![Text-Response](https://github.com/Peekaey/Shouko/blob/master/Images/Text-response.png)
 
-
+#### Database Structure
+![Database-Table](https://github.com/Peekaey/Shouko/blob/master/Images/Database-Tables.png)
